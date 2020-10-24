@@ -55,7 +55,6 @@ export const login = (
   try {
     await axios.post("/auth/login", values);
     const { data } = await axios.get("/auth");
-    console.log(data);
     resetForm();
     setIsRedirect(false);
     dispatch(setCurrentUser(data));
