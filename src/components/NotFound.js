@@ -23,9 +23,9 @@ export default function NotFound() {
         Sorry, this page isn't available.
       </Typography>
       <Typography variant="subtitle1">
-        The link you followed may be broken, or the page may have been removed.{" "}
+        The link you followed may be broken, or the page may have been removed.
         <Link component={NavLink} to="/">
-          Go back to Instagram
+          Go back to Home
         </Link>
       </Typography>
     </div>

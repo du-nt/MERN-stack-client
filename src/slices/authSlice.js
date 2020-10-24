@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// axios.defaults.baseURL = "/api/";
-axios.defaults.baseURL =
-  "https://instagram-clone-api-server.herokuapp.com/api/";
-axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "/api/";
+// axios.defaults.baseURL = "";
+// axios.defaults.withCredentials = true;
 
 const config = {
   header: { "content-type": "multipart/form-data" },
@@ -30,20 +29,6 @@ const auth = createSlice({
     changePhotoSuccess: (state, { payload }) => {
       state.user.avatar = payload;
     },
-    followSuccess: (state, { payload }) => {
-      state.user.following.push(payload);
-      state.user.followingCount += 1;
-    },
-    unFollowSuccess: (state, { payload }) => {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          following: state.user.following.filter((id) => id !== payload),
-          followingCount: state.user.followingCount - 1,
-        },
-      };
-    },
   },
 });
 
@@ -68,7 +53,9 @@ export const login = (
   { setErrors, resetForm }
 ) => async (dispatch) => {
   try {
-    const { data } = await axios.post("/auth/login", values);
+    await axios.post("/auth/login", values);
+    const { data } = await axios.get("/auth");
+    console.log(data);
     resetForm();
     setIsRedirect(false);
     dispatch(setCurrentUser(data));
@@ -198,31 +185,7 @@ export const removePhoto = (toast) => async (dispatch) => {
   }
 };
 
-export const follow = (_id) => async (dispatch) => {
-  try {
-    await axios.get(`/users/user/${_id}/follow`);
-    dispatch(followSuccess(_id));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const unFollow = (_id) => async (dispatch) => {
-  try {
-    await axios.get(`/users/user/${_id}/unFollow`);
-    dispatch(unFollowSuccess(_id));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const { reducer, actions } = auth;
-export const {
-  logoutSuccess,
-  setCurrentUser,
-  changePhotoSuccess,
-  followSuccess,
-  unFollowSuccess,
-} = actions;
+export const { logoutSuccess, setCurrentUser, changePhotoSuccess } = actions;
 
 export default reducer;

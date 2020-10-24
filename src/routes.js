@@ -2,14 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-import Header from "./components/Header";
-import Home from "./components/HomeSections/Home.js";
+import Header from "./components/HeaderSections/Header";
+import Home from "./components/HomeSections/Home";
 import Profile from "./components/ProfileSections/Profile";
-import EditProfile from "./components/EditProfileSections/EditProfile";
-import Explore from "./components/ExploreSections/Explore";
-import DetailedPost from "./components/DetailedPostSections/DetailedPost";
-import SeeAllSuggestions from "./components/SeeAllSuggestions";
-import NotYet from "./components/NotYet";
+import Private from "./components/Private";
 
 export const CustomizedRoute = ({
   component: Component,
@@ -83,29 +79,9 @@ GoHomeIfLogged.defaultProps = {
 export const routes = [
   {
     path: "/",
+    protect: false,
     exact: true,
     component: () => <Home />,
-  },
-  {
-    path: "/accounts",
-    component: () => <EditProfile />,
-  },
-  {
-    path: "/explore",
-    exact: true,
-    component: () => <Explore />,
-  },
-  {
-    path: "/explore/people/suggested",
-    component: () => <SeeAllSuggestions />,
-  },
-  {
-    path: "/inbox",
-    component: () => <NotYet />,
-  },
-  {
-    path: "/activity",
-    component: () => <NotYet />,
   },
   {
     path: "/users/:userNameParam",
@@ -113,8 +89,7 @@ export const routes = [
     component: () => <Profile />,
   },
   {
-    path: "/p/:postId",
-    protect: false,
-    component: () => <DetailedPost />,
+    path: "/private",
+    component: () => <Private />,
   },
 ];
